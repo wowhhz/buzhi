@@ -19,7 +19,8 @@ const devConfig = {
     module: {
         rules: [{
             test: /\.css$/,
-            use: ["style-loader", "css-loader?modules&localIdentName=[local]-[hash:base64:5]", "postcss-loader"]
+            use: ["style-loader", "css-loader", "postcss-loader"]
+            // use: ["style-loader", "css-loader?modules&localIdentName=[local]-[hash:base64:5]", "postcss-loader"]
         }]
     },
     devServer: {

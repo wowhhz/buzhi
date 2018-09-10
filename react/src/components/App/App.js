@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-
+import './App.css';
 import Nav from 'components/Nav/Nav';
 import getRouter from 'router/router';
 
@@ -8,7 +8,7 @@ export default class App extends Component {
         return (
             <div>
                 <Nav/>
-                {getRouter()}
+                <div className="container">{getRouter()}</div>
             </div>
         )
     }

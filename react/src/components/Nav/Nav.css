@@ -1,0 +1,20 @@
+
+.navigator {
+  overflow: hidden;
+  line-height: 50px;
+  height: 50px;
+  background: #ccc;
+
+  padding-left: 10%;
+}
+
+.navigator li{
+  float: left;
+  padding: 0px 20px 0 0;
+  list-style: none;
+}
+
+.navigator li:last-child{
+  position: absolute;
+  right: 100px;
+}
