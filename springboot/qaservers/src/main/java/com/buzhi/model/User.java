@@ -1,30 +1,55 @@
 package com.buzhi.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.validation.constraints.Min;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.validator.constraints.Length;
 
 @Entity
+@GenericGenerator(name = "jpa-uuid", strategy = "uuid")
 public class User {
+	/**用户编号**/
 	@Id
-	@GeneratedValue
-	private Integer id;
+	@GeneratedValue(generator = "jpa-uuid")
+    @Column(length = 8)
+	private String id;
+	/**email**/
+	@NotBlank(message = "电子邮箱地址不能为空")
+	@Email(message = "电子邮箱格式错误")
 	private String email;
+	/**password**/
+	@Length(min=3,max=20,message="密码必须在3至20个字符之间")
+	@NotBlank(message = "密码不能为空")
 	private String password;
+	/**昵称**/
+	@Length(min=3,max=30,message="昵称必须在3至30个字符之间")
+	@NotBlank(message = "昵称不能为空")
 	private String username;
+	/**性别**/
 	private String sex;
+	/**生日**/
 	private String birthday;
+	/**地区、地址**/
 	private String address;
+	/**公司**/
 	private String company;
+	/**职业**/
 	private String occupation;
+	/**教育**/
 	private String education;
+	/**自我简介**/
 	private String remark;
 	
-	public Integer getId() {
+	
+	public String getId() {
 		return id;
 	}
-	public void setId(Integer id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 	public String getEmail() {

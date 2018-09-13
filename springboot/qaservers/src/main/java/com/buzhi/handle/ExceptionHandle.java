@@ -23,7 +23,7 @@ public class ExceptionHandle {
 			UserException userException = (UserException)e;
 			return ResultUtil.error(userException.getCode(), userException.getMessage());
 		}else{
-			return ResultUtil.error(100,e.getMessage());
+			return ResultUtil.error(99999,e.getMessage());
 		}
 	}
 }

@@ -2,13 +2,16 @@ package com.buzhi.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
 import javax.websocket.server.PathParam;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.buzhi.enums.ResultEnum;
+import com.buzhi.exception.UserException;
 import com.buzhi.model.Page;
 import com.buzhi.model.Result;
 import com.buzhi.model.User;
@@ -50,13 +53,16 @@ public class UserController {
 	}
 	
 	@PostMapping(value="/signup")//, produces="application/json"
-	public Result signup(@PathParam("email") String email,@PathParam("username") String username,@PathParam("password") String password){
-		User user = userService.findByEmail(email);
-		if(user==null){
-			return ResultUtil.error(ResultEnum.USER_ERROR_NOUSER);
-		}else{
+	public Result signup(@Valid User user,BindingResult bindingResult){
+		if(bindingResult.hasErrors()){
+			return ResultUtil.error(9,bindingResult.getFieldError().getDefaultMessage());
+		}
+		User _user = userService.findByEmail(user.getEmail());
+		if(_user==null){
 			User newuser = userRepository.save(user);
 			return ResultUtil.success(newuser);
+		}else{
+			return ResultUtil.error(ResultEnum.USER_ERROR_EXIST);
 		}
 	}
 }
