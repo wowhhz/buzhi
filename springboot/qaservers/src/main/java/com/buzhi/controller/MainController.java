@@ -40,7 +40,7 @@ public class MainController {
         		+ "<li><h5>问答模块<h5>"
         		+ "<ul>"
         		+ "<li>热门问题 <a href=\"/content/hot\"> /content/hot</a></li>"
-        		+ "<li>查看问答 <a href=\"/content/query?id=1&ctype=1&clink=1\">/content/query</a><br/> 参数：id：编号、ctype：类型(q-问题,a-回答)、clink：问题编号，返回报文按赞同数排序</li>"
+        		+ "<li>查看问答 <a href=\"/content/query?id=1&ctype=1&clink=1\">/content/query</a><br/> 参数：id：编号、ctype：类型(q-问题,a-回答)、clink：问题编号，模糊查询标题或内容(多个关键词用空格分隔)，返回报文按赞同数排序</li>"
         		+ "<li>提交问答 <a href=\"/content/publish\">/content/publish</a></li>"
         		+ "</ul>"
         		+ "</li>"

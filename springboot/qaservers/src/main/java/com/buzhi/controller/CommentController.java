@@ -7,6 +7,7 @@ import java.util.List;
 
 import org.apache.catalina.servlet4preview.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.web.PageableDefault;
@@ -48,19 +49,15 @@ public class CommentController {
 	public Result query(HttpServletRequest request,Pageable pageable){
 		String contentId = request.getParameter("contentId");
 		String replyLink = request.getParameter("replyLink");
-		List<Comment> list = new ArrayList();
+		Page<Comment> page = null;
 		if(!StringUtils.isEmpty(contentId)){
-			list = commentRepository.findByContentId(contentId, pageable);
+			page = commentRepository.findByContentId(contentId, pageable);
 		}
 		if(!StringUtils.isEmpty(replyLink)){
-			list = commentRepository.findByReplyLink(replyLink, pageable);
-		}
-		 
-		if(list==null || list.size()==0){
-			return ResultUtil.error(ResultEnum.COMMENT_NODATA);
+			page = commentRepository.findByReplyLink(replyLink, pageable);
 		}
 		
-		return ResultUtil.success(list);
+		return ResultUtil.success(page);
 	}
 	
 	
