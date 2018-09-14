@@ -8,9 +8,9 @@ import java.util.List;
 import org.apache.catalina.servlet4preview.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -21,7 +21,7 @@ import com.buzhi.model.Result;
 import com.buzhi.repository.CommentRepository;
 import com.buzhi.service.CommentService;
 import com.buzhi.utils.ResultUtil;
-import com.mysql.jdbc.StringUtils;
+import com.buzhi.utils.StringUtils;
 
 @RestController
 @RequestMapping(value="/comment")
@@ -34,7 +34,7 @@ public class CommentController {
 	private CommentRepository commentRepository;
 	
 	@RequestMapping(value="/hot")
-	public Result hot(@PageableDefault(page=0,size=10,sort="agreenum,asc")Pageable pageable){
+	public Result hot(@PageableDefault(page=0,size=10,sort="agreenum", direction = Direction.DESC)Pageable pageable){
         Iterator<Comment> all = commentRepository.findAll(pageable).iterator();
         List<Comment> list = new ArrayList<Comment>();
         while (all.hasNext()){
@@ -49,10 +49,10 @@ public class CommentController {
 		String contentId = request.getParameter("contentId");
 		String replyLink = request.getParameter("replyLink");
 		List<Comment> list = new ArrayList();
-		if(!StringUtils.isNullOrEmpty(contentId)){
+		if(!StringUtils.isEmpty(contentId)){
 			list = commentRepository.findByContentId(contentId, pageable);
 		}
-		if(!StringUtils.isNullOrEmpty(replyLink)){
+		if(!StringUtils.isEmpty(replyLink)){
 			list = commentRepository.findByReplyLink(replyLink, pageable);
 		}
 		 
@@ -66,7 +66,7 @@ public class CommentController {
 	
 	@PostMapping(value="/publish")
 	public Result publish(Comment comment){
-		if(StringUtils.isNullOrEmpty(comment.getId())){
+		if(StringUtils.isEmpty(comment.getId())){
 			comment.setId(commentService.generateUniqueCode());
 			comment.setCreateDate(new Date());
 		}

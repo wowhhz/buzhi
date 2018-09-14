@@ -8,10 +8,9 @@ import java.util.List;
 import org.apache.catalina.servlet4preview.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.web.PageableDefault;
-import org.springframework.http.HttpRequest;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -22,7 +21,8 @@ import com.buzhi.model.Result;
 import com.buzhi.repository.ContentRepository;
 import com.buzhi.service.ContentService;
 import com.buzhi.utils.ResultUtil;
-import com.mysql.jdbc.StringUtils;
+import com.buzhi.utils.StringUtils;
+
 
 @RestController
 @RequestMapping(value="/content")
@@ -35,7 +35,7 @@ public class ContentController {
 	private ContentRepository contentRepository;
 	
 	@RequestMapping(value="/hot")
-	public Result hot(@PageableDefault(page=0,size=10,sort="agreenum,asc")Pageable pageable){
+	public Result hot(@PageableDefault(page=0,size=10,sort="agreenum", direction = Direction.DESC)Pageable pageable){
         Iterator<Content> all = contentRepository.findAll(pageable).iterator();
         List<Content> list = new ArrayList<Content>();
         while (all.hasNext()){
@@ -50,15 +50,15 @@ public class ContentController {
 		String id = request.getParameter("id");
 		String ctype = request.getParameter("ctype");
 		String clink = request.getParameter("clink");
-		pageable.getSort().by("agreenum,desc");
+		pageable.getSort().by("agreenum").descending();
 		List<Content> list = new ArrayList();
-		if(!StringUtils.isNullOrEmpty(id)){
+		if(!StringUtils.isEmpty(id)){
 			list = contentRepository.findByClink(ctype, pageable);
 		}
-		if(!StringUtils.isNullOrEmpty(ctype)){
+		if(!StringUtils.isEmpty(ctype)){
 			list = contentRepository.findByCtype(ctype, pageable);
 		}
-		if(!StringUtils.isNullOrEmpty(clink)){
+		if(!StringUtils.isEmpty(clink)){
 			list = contentRepository.findByClink(clink, pageable);
 		}
 		if(list==null || list.size()==0){
@@ -71,7 +71,7 @@ public class ContentController {
 	
 	@PostMapping(value="/publish")
 	public Result publish(Content content){
-		if(StringUtils.isNullOrEmpty(content.getId())){
+		if(StringUtils.isEmpty(content.getId())){
 			content.setId(contentService.generateUniqueCode());
 			content.setCreateDate(new Date());
 		}else{
