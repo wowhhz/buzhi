@@ -34,7 +34,7 @@ public class CommentController {
 	@Autowired
 	private CommentRepository commentRepository;
 	
-	@RequestMapping(value="/hot")
+	@GetMapping(value="/hot")
 	public Result hot(@PageableDefault(page=0,size=10,sort="agreenum", direction = Direction.DESC)Pageable pageable){
         Iterator<Comment> all = commentRepository.findAll(pageable).iterator();
         List<Comment> list = new ArrayList<Comment>();

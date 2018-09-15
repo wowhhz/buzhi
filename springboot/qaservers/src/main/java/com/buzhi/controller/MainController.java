@@ -21,20 +21,20 @@ public class MainController {
 	
 	//test
 	
-	@RequestMapping(value="/test", method= RequestMethod.GET, produces="application/json")
+	@GetMapping(value="/test", produces="application/json")
 	public ResponseEntity test(){
 		return new ResponseEntity<>(ResultUtil.success(),HttpStatus.OK);
 	}
 	
-	@RequestMapping("/")
+	@GetMapping("/")
     public String sayHello() {
         return "<h1>欢迎来到QA社区</h1><br />Welcome to QA Community"
         		+ "<p>以下URL为API开放示例</p>"
         		+ "<ul>"
         		+ "<li><h5>用户模块<h5>"
         		+ "<ul>"
-        		+ "<li>用户登录 <a href=\"/login\">/login</a></li>"
-        		+ "<li>用户注册 <a href=\"/signup\">/signup</a></li>"
+        		+ "<li>用户登录 <a href=\"/auth/login\">/auth/login</a></li>"
+        		+ "<li>用户注册 <a href=\"/auth/signup\">/auth/signup</a></li>"
         		+ "</ul>"
         		+ "</li>"
         		+ "<li><h5>问答模块<h5>"

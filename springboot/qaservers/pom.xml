@@ -15,13 +15,14 @@
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>2.0.4.RELEASE</version>
-		<relativePath/> <!-- lookup parent from repository -->
+		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<java.version>1.8</java.version>
+		<jruby.version>1.7.26</jruby.version>
 	</properties>
 
 	<dependencies>
@@ -57,24 +58,100 @@
 			<scope>test</scope>
 		</dependency>
 		<dependency>
-			 <groupId>org.springframework.boot</groupId>
-			 <artifactId>spring-boot-devtools</artifactId>
-			 <optional>true</optional>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-devtools</artifactId>
+			<optional>true</optional>
+		</dependency>
+		<!-- 
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-security</artifactId>
+		</dependency>
+		 -->
+		<dependency>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-staticdocs</artifactId>
+			<version>2.6.1</version>
+		</dependency>
+		<dependency>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-swagger2</artifactId>
+			<version>2.6.1</version>
+		</dependency>
+		<dependency>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-swagger-ui</artifactId>
+			<version>2.6.1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.restdocs</groupId>
+			<artifactId>spring-restdocs-mockmvc</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-staticdocs</artifactId>
+			<version>2.6.1</version>
+		</dependency>
+		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>fastjson</artifactId>
+			<version>1.2.8</version>
 		</dependency>
 	</dependencies>
 	<build>
+		<defaultGoal>process-resources</defaultGoal>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <targetPath>${project.build.directory}/book</targetPath>
+            </resource>
+        </resources>
+        
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<dependencies>
-				   <dependency>
-				    <groupId>org.springframework</groupId>
-				    <artifactId>springloaded</artifactId>
-				    <version>1.2.6.RELEASE</version>
-				   </dependency>
-				 </dependencies>
+					<dependency>
+						<groupId>org.springframework</groupId>
+						<artifactId>springloaded</artifactId>
+						<version>1.2.6.RELEASE</version>
+					</dependency>
+				</dependencies>
 			</plugin>
+			<!-- 离线api接口文档html输出，不支持windows系统-->
+			<!--
+			  <plugin>
+			    <groupId>org.asciidoctor</groupId>
+			    <artifactId>asciidoctor-maven-plugin</artifactId>
+			    <configuration>
+			        <sourceDirectory>${asciidoctor.input.directory}</sourceDirectory>
+			        <outputDirectory>${asciidoctor.html.output.directory}</outputDirectory>
+			        <sourceDocumentName>index.adoc</sourceDocumentName>
+			        <attributes>
+			            <doctype>book</doctype>
+			            <toc>left</toc>
+			            <toclevels>3</toclevels>
+			            <generated>${generated.asciidoc.directory}</generated>
+			        </attributes>
+			    </configuration>
+			    <executions>
+			        <execution>
+			            <id>output-html</id>
+			            <phase>test</phase>
+			            <goals>
+			                <goal>process-asciidoc</goal>
+			            </goals>
+			            <configuration>
+			                <backend>html</backend>
+			                <attributes>
+			                    <snippets>${project.build.directory}/generated-snippets</snippets>
+			                </attributes>
+			            </configuration>
+			        </execution>
+			    </executions>
+			</plugin>
+			 -->
 		</plugins>
 	</build>
 

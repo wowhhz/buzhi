@@ -37,7 +37,7 @@ public class ContentController {
 	@Autowired
 	private ContentRepository contentRepository;
 	
-	@RequestMapping(value="/hot")
+	@GetMapping(value="/hot")
 	public Result hot(@PageableDefault(page=0,size=10,sort="agreenum", direction = Direction.DESC)Pageable pageable){
         Iterator<Content> all = contentRepository.findAll(pageable).iterator();
         List<Content> list = new ArrayList<Content>();
